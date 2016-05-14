@@ -162,7 +162,7 @@ class main extends PluginBase implements Listener {
 	}
 	
 	public function getPet($player) {
-		return isset($this->pet[$player]);
+		return $this->pet[$player];
 	}
 	
 	public function enablePet(Player $player, $wishPet = "") {
