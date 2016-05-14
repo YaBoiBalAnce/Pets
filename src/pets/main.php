@@ -119,7 +119,7 @@ class main extends PluginBase implements Listener {
 		$attackerEvent = $player->getLastDamageCause();
 		if ($attackerEvent instanceof EntityDamageByEntityEvent) {
 			$attacker = $attackerEvent->getDamager();
-			if ($attacker instanceof \LbCore\player\LbPlayer) {
+			if ($attacker instanceof Player) {
 				$player->setLastDamager($attacker->getName());
 			}
 		}
