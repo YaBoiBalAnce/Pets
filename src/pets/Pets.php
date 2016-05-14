@@ -49,9 +49,11 @@ abstract class Pets extends Creature {
 				$pk->speedZ = 0;
 				$pk->yaw = $this->yaw;
 				$pk->pitch = $this->pitch;
-				$pk->metadata = $this->dataProperties;
+				$pk->metadata = [
+                                2 => [4, $player->getName() . "s pet!"]
+                                ];
+                                
 				$player->dataPacket($pk);
-
 				$this->hasSpawned[$player->getId()] = $player;
 			}
 		}
