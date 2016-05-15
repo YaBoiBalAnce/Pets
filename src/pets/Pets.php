@@ -14,6 +14,7 @@ use pocketmine\math\Math;
 use pocketmine\block\Air;
 use pocketmine\block\Liquid;
 use pocketmine\utils\TextFormat;
+use pets\main;
 
 abstract class Pets extends Creature {
 	/*reasons for pet to speak*/
@@ -25,7 +26,7 @@ abstract class Pets extends Creature {
 
 	protected $owner = null;
 	protected $distanceToOwner = 0;
-	protected $closeTarget = null;
+	public $closeTarget = null;
 
 	public function saveNBT() {
 		
@@ -195,18 +196,19 @@ abstract class Pets extends Creature {
 			return;
 		}
 		if(is_null($this->closeTarget)) {
-			$len = rand(12, 15);
-			$x = (-sin(deg2rad( $this->owner->yaw + 20))) * $len  +  $this->owner->getX();
-			$z = cos(deg2rad( $this->owner->yaw + 20)) * $len  +  $this->owner->getZ();
-			$this->closeTarget = new Vector3($x, $this->owner->getY() + 1, $z);
+// 			$len = rand(12, 15);
+// 			$x = (-sin(deg2rad( $this->owner->yaw + 20))) * $len  +  $this->owner->getX();
+// 			$z = cos(deg2rad( $this->owner->yaw + 20)) * $len  +  $this->owner->getZ();
+// 			$this->closeTarget = new Vector3($x, $this->owner->getY() + 1, $z);
+			$this->kill();
 		} else {
-			parent::close();
-			if ($this->owner->isPetChanging) {
-				$this->owner->setPetState('enable', $this->owner->wishPet);
+			if (main::$isPetChanging[$this->owner->getName()]) {
+				$this->kill();
+				main::setPetState('enable',$this->owner->getName());
 				//$this->owner->enablePet($this->owner, $this->owner->wishPet);
 			}
 		}
-		$this->owner->isPetChanging = false;
+		main::$isPetChanging[$this->owner->getName()] = false;
 	}
 	
 	/**

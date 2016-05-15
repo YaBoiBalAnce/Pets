@@ -17,21 +17,22 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\Player;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\math\Vector3;
 
 class main extends PluginBase implements Listener {
 	
 	public $pet;
-	public $petState;
+	public static $petState;
 	public $petType;
 	public $wishPet;
-	public $isPetChanging;
+	public static $isPetChanging;
 	public function onEnable() {
 		$server = Server::getInstance();
 		$server->getCommandMap()->register('pets', new PetCommand($this,"pets"));
 		Entity::registerEntity(ChickenPet::class);
 		Entity::registerEntity(WolfPet::class);
 		Entity::registerEntity(PigPet::class);
-		$server->getScheduler()->scheduleRepeatingTask(new task\PetsTick($this), 20*60);//run each minute for random pet messages
+		//$server->getScheduler()->scheduleRepeatingTask(new task\PetsTick($this), 20*60);//run each minute for random pet messages
 		$server->getScheduler()->scheduleRepeatingTask(new task\SpawnPetsTick($this), 20);
 		
 	}
@@ -56,13 +57,14 @@ class main extends PluginBase implements Listener {
 					]),
 		]);
 		$pet = Entity::createEntity($type, $chunk, $nbt, ...$args);
+	//	$pet->setNameTag("Bob The Pet");
 		$pet->setOwner($player);
 		$pet->spawnToAll();
 		return $pet; 
 	}
 
 	public function createPet(Player $player, $type, $holdType = "") {
-// 		if (isset($this->pet[$player->getName()]) != true) {	
+ 		if (isset($this->pet[$player->getName()]) != true) {	
 			$len = rand(8, 12); 
 			$x = (-sin(deg2rad($player->yaw))) * $len  + $player->getX();
 			$z = cos(deg2rad($player->yaw)) * $len  + $player->getZ();
@@ -70,22 +72,28 @@ class main extends PluginBase implements Listener {
 
 			$source = new Position($x , $y + 2, $z, $player->getLevel());
 			if ($type == "") {
-				$pets = array("ChickenPet", "WolfPet", "PigPet");
+				$pets = array("ChickenPet", "PigPet","WolfPet");
 				$type = $pets[rand(0, 2)];
 			}
-			if ($holdType != "") {
-				$pets = array("ChickenPet", "WolfPet","PigPet");
-				foreach ($pets as $key => $petType) {
-					if($petType == $holdType) {
-						unset($pets[$key]);
-						break;
-					}	
+			if ($type != "") {
+// 				$pets = array("ChickenPet","PigPet");
+// 				foreach ($pets as $key => $petType) {
+// 					if($petType == $holdType) {
+// 						unset($pets[$key]);
+// 						break;
+// 					}	
+// 				}
+// 				$type = $pets[array_rand($pets)];
+				if ($type == "pig"){
+					$type = "PigPet";
 				}
-				$type = $pets[array_rand($pets)];
+				if ($type = "chicken"){
+					$type = "ChickenPet";
+				}
 			}
 			$pet = $this->create($player,$type, $source);
 			$this->addPet($player->getName(),$pet);
-// 		}
+ 		}
 	}
 
 // 	public function onPlayerAuth(PlayerAuthEvent $event) {
@@ -105,7 +113,7 @@ class main extends PluginBase implements Listener {
 		$player = $event->getPlayer();
 		$pet = $player->getPet();
 		if (!is_null($pet)) {
-			$pet->fastClose();
+			$this->close($player->getName());
 		}
 	}
 	
@@ -119,7 +127,7 @@ class main extends PluginBase implements Listener {
 		$attackerEvent = $player->getLastDamageCause();
 		if ($attackerEvent instanceof EntityDamageByEntityEvent) {
 			$attacker = $attackerEvent->getDamager();
-			if ($attacker instanceof \LbCore\player\LbPlayer) {
+			if ($attacker instanceof Player) {
 				$player->setLastDamager($attacker->getName());
 			}
 		}
@@ -127,8 +135,8 @@ class main extends PluginBase implements Listener {
 
 	
 	//ported Pet API by BalAnce
-	public function setPetState($state,$player, $petType = "", $delay = 2) {
-		$this->petState[$player] = array(
+	public static function setPetState($state,$player, $petType = "", $delay = 2) {
+		self::$petState[$player] = array(
 				'state' => $state,
 				'petType' => $petType,
 				'delay' => $delay
@@ -136,25 +144,26 @@ class main extends PluginBase implements Listener {
 	}
 	
 	public function getPetState($player){
-		if(isset($this->petState[$player]['state'])) {
-			if($this->petState[$player]['delay'] > 0){
-				$this->petState[$player]['delay']--;
+		if(isset(self::$petState[$player]['state'])) {
+			if(self::$petState[$player]['delay'] > 0){
+				self::$petState[$player]['delay']--;
 				return false;
 			}
-			return $this->petState[$player];
+			return self::$petState[$player];
 		}
 		return false;
 	}
 	
 	public function clearPetState($player){
-		unset($this->petState[$player]);
+		unset(self::$petState[$player]);
 	}
 	public function togglePetEnable($player) {
-		if (!$this->isPetChanging[$player]) {
+		if (!self::$isPetChanging[$player]) {
 			if (isset($this->pet[$player])) {
-				$this->pet[$player]->close();
+				$this->getPet($player)->close();
 				$this->pet[$player] = null;
-				$this->isPetChanging[$player] = true;
+				$this->getServer()->getPlayer($player)->sendMessage("Pet Disapeared!");	
+				self::$isPetChanging[$player] = false;
 			} else {
 				$this->enablePet($this->getServer()->getPlayer($player));
 			}
@@ -175,16 +184,16 @@ class main extends PluginBase implements Listener {
 				$type = $this->wishPet[$player->getName()];
 				$this->wishPet[$player->getName()] = "";
 			}
-			$this->createPet($player, $type, $holdType);
+			$this->createPet($player, self::$petState[$player->getName()]["petType"], $holdType);
 			$player->sendMessage("Pet Summoned!");
 	}
 	
 	public function showPet(Player $player,$type = "") {
 			$this->wishPet[$player->getName()] = !empty($type) ? $type : $this->petType;
 			if (isset($this->pet[$player->getName()])) {
-				$this->pet[$player->getName()]->close();
+				$this->getPet($player->getName())->close();
 				$this->pet[$player->getName()] = null;
-				$this->isPetChanging[$player->getName] = true;
+				self::$isPetChanging[$player->getName] = true;
 			} else {
 				$this->enablePet($player, $this->wishPet[$player->getName()]);
 			}
@@ -195,7 +204,7 @@ class main extends PluginBase implements Listener {
 	public function hidePet(Player $player) {
 		$this->petEnable[$player->getName()] = false;
 		if (isset($this->pet[$player->getName()])) {
-			$this->pet[$player->getName()]->close();
+			$this->getPet($player->getName())->close();
 			$this->pet[$player->getName()] = null;
 			//send random bye message from pet
 			$player->sendMessage("Pet hidden!");

@@ -20,34 +20,43 @@ class PetCommand extends PluginCommand {
 	
 		if (!isset($args[0])) {
 			//$sender->setPetState('toggle');
-			$this->main->setPetState("toggle", $sender->getName());
+			main::setPetState("toggle", $sender->getName());
 //			$sender->togglePetEnable();
 			return true;
 		}
 
 		$arg = strtolower($args[0]);
-
+		if ($arg = "name"){
+			if (isset($args[1])){
+				unset($args[0]);
+				$name = implode(" ", $args);
+				$this->main->getPet($sender->getName())->setNameTag($name);
+				$sender->sendMessage("Set Name to ".$name);
+			}
+			return true;
+		}
+		
 		if ($arg == "yes" || $arg == "on") {
 			//$sender->setPetState('show');
-			$this->main->setPetState("show", $sender->getName());
+			main::setPetState("show", $sender->getName());
 //			$sender->showPet();
 			return true;
 		}
 
 		if ($arg == "no" || $arg == "off") {
 			//$sender->setPetState('hide');
-			$this->main->setPetState("hide", $sender->getName());
+			main::setPetState("hide", $sender->getName());
 //			$sender->hidePet();
 			return true;
 		}
 
-		$avilablePets = array("dog", "chicken");
+		$avilablePets = array("pig", "chicken");
 		if (in_array($arg, $avilablePets)) {
 			if ($arg == "dog") {
 				$arg = "wolf";
 			}
 			//$sender->setPetState('show', ucfirst($arg) . "Pet");
-			$this->main->setPetState("hide", $sender->getName(), ucfirst($arg) . "Pet");
+			main::setPetState("hide", $sender->getName(), ucfirst($arg) . "Pet");
 //			$sender->showPet(ucfirst($arg) . "Pet");
 			return true;
 		}
