@@ -96,19 +96,6 @@ class main extends PluginBase implements Listener {
  		}
 	}
 
-// 	public function onPlayerAuth(PlayerAuthEvent $event) {
-// 		$player = $event->getPlayer();
-// 		if ($player->isVip()) {
-// 			$pet = $player->getPet();
-// 			if (is_null($pet)) {
-// 				$player->setPetState('enable', '', 5);
-// 			}			
-// 			if ($player->getState() == \LbCore\player\LbPlayer::IN_LOBBY) {
-// 				$player->setLobbyTime(date('Y-m-d h:i:s'));
-// 			}
-// 		}
-// 	}
-
 	public function onPlayerQuit(PlayerQuitEvent $event) {
 		$player = $event->getPlayer();
 		$pet = $player->getPet();
