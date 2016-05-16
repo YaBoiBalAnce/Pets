@@ -26,7 +26,7 @@ class PetCommand extends PluginCommand {
 		}
 
 		$arg = strtolower($args[0]);
-		if ($arg = "name"){
+		if ($arg = "setname"){
 			if (isset($args[1])){
 				unset($args[0]);
 				$name = implode(" ", $args);
