@@ -2,7 +2,6 @@
 
 namespace Pets;
 
-use LbCore\language\Translate;
 use pocketmine\entity\Creature;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Timings;
@@ -17,12 +16,6 @@ use pocketmine\utils\TextFormat;
 use pets\main;
 
 abstract class Pets extends Creature {
-	/*reasons for pet to speak*/
-	const PET_SUMMONING = 0;
-	const PET_IS_GONE = 1;
-	const OWNER_IS_BACK = 2;
-	const OWNER_PROFANITY = 3;
-	const PET_LOBBY_RANDOM = 4;
 
 	protected $owner = null;
 	protected $distanceToOwner = 0;
@@ -51,8 +44,14 @@ abstract class Pets extends Creature {
 				$pk->yaw = $this->yaw;
 				$pk->pitch = $this->pitch;
 				$pk->metadata = $this->dataProperties;
+				if (static::NETWORK_ID == 66){
+					$pk->metadata = [
+							15 => [0,1],
+							20 => [2,86]
+					];
+					$pk->y = $this->y + 0.6;
+				}
 				$player->dataPacket($pk);
-
 				$this->hasSpawned[$player->getId()] = $player;
 			}
 		}
@@ -68,7 +67,6 @@ abstract class Pets extends Creature {
 			$this->lastYaw = $this->yaw;
 			$this->lastPitch = $this->pitch;
 		}
-//		$this->level->addEntityMovement($this->getViewers(), $this->id, $this->x, $this->y, $this->z, $this->yaw, $this->pitch);
 		$this->level->addEntityMovement($this->chunk->getX(), $this->chunk->getZ(), $this->id, $this->x, $this->y, $this->z, $this->yaw, $this->pitch);
 	}
 
@@ -77,12 +75,10 @@ abstract class Pets extends Creature {
 	}
 
 	public function move($dx, $dy, $dz) {
-//		Timings::$entityMoveTimer->startTiming();
 		$this->boundingBox->offset($dx, 0, 0);
 		$this->boundingBox->offset(0, 0, $dz);
 		$this->boundingBox->offset(0, $dy, 0);
 		$this->setComponents($this->x + $dx, $this->y + $dy, $this->z + $dz);		
-//		Timings::$entityMoveTimer->stopTiming();
 		return true;
 	}
 
@@ -202,67 +198,12 @@ abstract class Pets extends Creature {
 // 			$this->closeTarget = new Vector3($x, $this->owner->getY() + 1, $z);
 			$this->kill();
 		} else {
-			if (main::$isPetChanging[$this->owner->getName()]) {
+			if (isset(main::$pet[$this->owner->getName()])) {
 				$this->kill();
-				main::setPetState('enable',$this->owner->getName());
-				//$this->owner->enablePet($this->owner, $this->owner->wishPet);
 			}
 		}
-		main::$isPetChanging[$this->owner->getName()] = false;
 	}
-	
-	/**
-	 * Send message from pet to owner by some reason
-	 * 
-	 * @param LbPlayer $player
-	 * @param int $reason
-	 */
-	public static function sendPetMessage($player, $reason = self::PET_SUMMONING) {
-		//contains available language key strings
-		$availReasons = [
-			self::PET_SUMMONING => "PET_WELCOME",
-			self::PET_IS_GONE => "PET_BYE",
-			self::OWNER_IS_BACK => "PET_OWNER_RETURN",
-			self::OWNER_PROFANITY => "PET_CHAT_FILTER",
-			self::PET_LOBBY_RANDOM => "PET_LOBBY_RANDOM"
-		];
-		if (!empty($availReasons[$reason])) {
-			$message = 'quirk!';//default message if something went wrong
-			if ($reason == self::OWNER_IS_BACK) {
-				//check for last damager
-				$lastDamager = $player->getLastDamager();
-				$gameTime = self::getTimeInterval($player->getJoinGameLastTime());
-				if (!is_null($lastDamager)) {
-					if(rand(1, 2) == 1) {
-						$messages = Translate::getInstance()->getTranslatedString($player->language, "PET_OWNER_DEAD");
-						foreach($messages as $key => $message){
-							$messages[$key] = str_replace("arg1", $lastDamager, $message);
-						}
-					} else {
-						$messages = Translate::getInstance()->getTranslatedString($player->language, "PET_OWNER_RETURN");						
-					}
-					$player->setLastDamager(null);
-				} elseif($player->getWonLastMacth()) {
-					$messages = Translate::getInstance()->getTranslatedString($player->language, "PET_OWNER_WINS");
-					$player->setWonLastMacth(false);
-				}elseif ($gameTime < 1) {
-					//if player returned very soon
-					$messages = Translate::getInstance()->getTranslatedString($player->language, "PET_OWNER_SOON_BACK");
-				} elseif ($gameTime > 5) {
-//					//or has been in match too long
-					$messages = Translate::getInstance()->getTranslatedString($player->language, "PET_OWNER_LONG_BACK");
-				} else {
-					//else send random message
-					$messages = Translate::getInstance()->getTranslatedString($player->language, "PET_OWNER_RETURN");
-				}				
-			} else {
-				$messages = Translate::getInstance()->getTranslatedString($player->language, $availReasons[$reason]);
-			}		
-			$message = $messages[rand(0, count($messages) - 1)];
-			$npc =  Translate::getInstance()->getTranslatedString($player->language, "PET_NPS");
-			$player->sendMessage(TextFormat::GRAY . $npc . ": " . TextFormat::WHITE . $message);
-		}
-	}
+
 	
 	/**
 	 * Return interval from started to current time in minutes
