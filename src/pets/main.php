@@ -34,6 +34,7 @@ class main extends PluginBase implements Listener {
 		Entity::registerEntity(WolfPet::class);
 		Entity::registerEntity(PigPet::class);
 		Entity::registerEntity(BlazePet::class);
+		Entity::registerEntity(MagmaPet::class);
 		//Entity::registerEntity(BlockPet::class);
 		//$server->getScheduler()->scheduleRepeatingTask(new task\PetsTick($this), 20*60);//run each minute for random pet messages
 		//$server->getScheduler()->scheduleRepeatingTask(new task\SpawnPetsTick($this), 20);
@@ -84,6 +85,9 @@ class main extends PluginBase implements Listener {
  				break;
  				case "BlazePet":
 
+ 				break;
+ 				case "MagmaPet":
+ 				
  				break;
  				default:
  					$pets = array("ChickenPet", "PigPet","WolfPet","BlazePet");
@@ -143,10 +147,10 @@ class main extends PluginBase implements Listener {
 	public function changePet(Player $player, $newtype){
 		$type = $newtype;
 		if (isset(self::$pet[$player->getName()])){
-			self::$pet[$player->getName()]->fastClose();
+			$this->getPet($player->getName())->close();
 			unset(self::$pet[$player->getName()]);
 		}
-		$this->pet[$player->getName()] = $this->createPet($player, $newtype);
+		self::$pet[$player->getName()] = $this->createPet($player, $newtype);
 	}
 	
 	public function getPet($player) {

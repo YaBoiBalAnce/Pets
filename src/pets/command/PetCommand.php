@@ -35,8 +35,8 @@ class PetCommand extends PluginCommand {
 				return true;
 			break;
 			case "type":
-				if (isset($args[2])){
-					switch ($args[2]){
+				if (isset($args[1])){
+					switch ($args[1]){
 						case "wolf":
 						case "dog":
 							if ($sender->hasPermission("pets.type.dog")){
@@ -78,6 +78,16 @@ class PetCommand extends PluginCommand {
 								return true;
 							}
 						break;
+						case "magma":
+							if ($sender->hasPermission("pets.type.magma")){
+								$this->main->changePet($sender, "MagmaPet");
+								$sender->sendMessage("Changed Pet to Magma!");
+								return true;
+							}else{
+								$sender->sendMessage("You do not have permission for blaze pet!");
+								return true;
+							}
+							break;
 						default:
 							$sender->sendMessage("/pet type [type]");
 							$sender->sendMessage("Types: blaze, pig, chicken, dog");
