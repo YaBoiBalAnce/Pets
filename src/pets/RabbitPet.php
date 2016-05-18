@@ -4,9 +4,9 @@ namespace pets;
 
 class RabbitPet extends Pets {
 
-	const NETWORK_ID = 101;
+	const NETWORK_ID = 18;
 
-	public $width = 0.3;
+	public $width = 0.5;
 	public $height = 0.5;
 	
 	public function getName() {
