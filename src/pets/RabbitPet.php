@@ -5,6 +5,8 @@ namespace pets;
 class RabbitPet extends Pets {
 
 	const NETWORK_ID = 18;
+	
+	const TYPE_WHITE = 1;
 
 	public $width = 0.5;
 	public $height = 0.5;
