@@ -1,6 +1,6 @@
-name: Pets
-author: BalAnce
-description: Simple Pets Plugin By BalAnce + Lifeboat
-version: 1.0.0 
+name: MysUPet_v1.0
+author: Adam1609
+description: A fork of YaBoiBalAnce with an amazing suport!
+version: 1.0
 main: pets\main
-api: [1.12.0] 
+api: [2.0.0] 
