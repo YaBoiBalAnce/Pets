@@ -12,7 +12,7 @@ class BatPet extends Pets {
 	public $switchDirectionTicks = 100;
 
 	public function getName() {
-		return "BlazePet";
+		return "BatPet";
 	}
 
 	public function getSpeed() {
