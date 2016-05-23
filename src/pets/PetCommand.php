@@ -40,6 +40,7 @@ class PetCommand extends PluginCommand {
 				$sender->sendMessage("§e======PetHelp======");
 				$sender->sendMessage("§b/pets to Spawn your Pet");
 				$sender->sendMessage("§b/pets type [type]");
+				$sender->sendMessage("§b/pets name [petname]");
 				return true;
 				}else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
 					    }
