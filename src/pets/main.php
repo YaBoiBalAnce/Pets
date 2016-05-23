@@ -159,10 +159,7 @@ class main extends PluginBase implements Listener {
 	
 	public function changePet(Player $player, $newtype){
 		$type = $newtype;
-		if (isset(self::$pet[$player->getName()])){
-			$this->getPet($player->getName())->close();
-			unset(self::$pet[$player->getName()]);
-		}
+		$this->disablePet($player);
 		self::$pet[$player->getName()] = $this->createPet($player, $newtype);
 	}
 	
