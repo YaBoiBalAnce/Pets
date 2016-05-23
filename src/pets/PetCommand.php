@@ -130,9 +130,6 @@ class PetCommand extends PluginCommand {
 								return true;
 							}
 						break;
-							}
-							}
-							break;
 						default:
 							$sender->sendMessage("/pet type [type]");
 							$sender->sendMessage("Types: blaze, pig, chicken, dog, rabbit, magma, bat, silerfish");
