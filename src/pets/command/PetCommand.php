@@ -119,13 +119,13 @@ class PetCommand extends PluginCommand {
 								return true;
 							}
 						break;
-						case "siverfish":
-							if ($sender->hasPermission("pets.type.silerfish")){
-								$this->main->changePet($sender, "SiverFishPet");
+						case "silverfish":
+							if ($sender->hasPermission("pets.type.silverfish")){
+								$this->main->changePet($sender, "SilverFishPet");
 								$sender->sendMessage("Your pet has changed to SiverFish!");
 								return true;
 							}else{
-								$sender->sendMessage("You do not have permission for SiverFish pet!");
+								$sender->sendMessage("You do not have permission for SilverFish pet!");
 								return true;
 							}
 						break;
@@ -134,7 +134,7 @@ class PetCommand extends PluginCommand {
 							break;
 						default:
 							$sender->sendMessage("/pet type [type]");
-							$sender->sendMessage("Types: blaze, pig, chicken, dog, rabbit, magma, bat, silerfish");
+							$sender->sendMessage("Types: blaze, pig, chicken, dog, rabbit, magma, bat, silverfish");
 						return true;
 					}
 				}
