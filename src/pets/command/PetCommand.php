@@ -30,7 +30,7 @@ class PetCommand extends PluginCommand {
                     return true;
                 }
 
-		switch (strtolower($args[1])){
+		 if(strtolower($args[0])){
 			case "help":
 				if($sender->hasPermission('pets.command.help')){
 				$sender->sendMessage("§e======PetHelp======");
