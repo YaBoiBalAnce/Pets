@@ -19,7 +19,7 @@ class PetCommand extends PluginCommand {
 	}
 
 	public function execute(CommandSender $sender, $currentAlias, array $args) {
-	
+	         if($sender->hasPermission('pets.command')){
 		if (!isset($args[0])) {
 			$this->main->togglePet($sender);
 			return true;
@@ -143,4 +143,4 @@ class PetCommand extends PluginCommand {
 		
 	}
 
-
+}
