@@ -19,7 +19,8 @@ class PetCommand extends PluginCommand {
 	}
 
 	public function execute(CommandSender $sender, $currentAlias, array $args) {
-		if (!isset($args[0])) {
+		
+                         if (!isset($args[0])) {
 			$this->main->togglePet($sender);
 			
 		switch (strtolower($args[0])){
@@ -135,5 +136,5 @@ class PetCommand extends PluginCommand {
 							$sender->sendMessage("Types: blaze, pig, chicken, dog, rabbit, magma, bat, silverfish");
                       return true;
 
-}
+ }
 }
