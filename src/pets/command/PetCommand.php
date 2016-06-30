@@ -5,7 +5,7 @@ namespace pets\command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginCommand;
 use pets\main;
-use pocketmine\utils\TextFormat as TF;
+use pocketmine\utils\TextFormat;
 
 class PetCommand extends PluginCommand {
 
