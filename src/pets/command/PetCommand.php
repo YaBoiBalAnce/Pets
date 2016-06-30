@@ -140,9 +140,9 @@ class PetCommand extends PluginCommand {
 						return true;
 					
 				
-			
+			}
 		
 		
 	
 
-}
+
