@@ -29,16 +29,6 @@ class PetCommand extends PluginCommand {
                     return true;
                 
 		switch (strtolower($args[0])){
-			case "name":
-			case "setname":
-				if (isset($args[1])){
-					unset($args[0]);
-					$name = implode(" ", $args);
-					$this->main->getPet($sender->getName())->setNameTag($name);
-					$sender->sendMessage("Set Name to ".$name);
-				}
-				return true;
-			break;
 			case "help":
 				if($sender->hasPermission('pets.command.help')){
 				$sender->sendMessage("§e======PetHelp======");
