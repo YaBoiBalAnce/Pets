@@ -2,7 +2,7 @@
 
 namespace pets;
 
-class SilverFishPet extends Pets {
+class SilverfishPet extends Pets {
 
 	const NETWORK_ID = 39;
 
