@@ -22,7 +22,8 @@ class PetCommand extends PluginCommand {
 		if (!isset($args[0])) {
                    if($sender->hasPermission('pets.command')){
 			$this->main->togglePet($sender);
-				}else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
+				return true;
+                    }else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
                      }
                return true;
 		
