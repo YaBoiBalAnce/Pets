@@ -139,6 +139,5 @@ class PetCommand extends PluginCommand {
 				}
 			break;
 		}
-		return true;
 	}
 }
