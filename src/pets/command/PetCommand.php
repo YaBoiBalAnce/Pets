@@ -145,3 +145,4 @@ class PetCommand extends PluginCommand {
 		
 	
 
+}
