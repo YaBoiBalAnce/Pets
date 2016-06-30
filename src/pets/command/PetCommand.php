@@ -20,8 +20,10 @@ class PetCommand extends PluginCommand {
 
 	public function execute(CommandSender $sender, $currentAlias, array $args) {
 		if (!isset($args[0])) {
+                   if($sender->hasPermission('pets.command')){
 			$this->main->togglePet($sender);
-			return true;
+				}else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
+                     return true;
 		}
 		switch (strtolower($args[0])){
 			case "name":
@@ -141,5 +143,4 @@ class PetCommand extends PluginCommand {
 		
 		
 	}
-
 
