@@ -26,7 +26,7 @@ class PetCommand extends PluginCommand {
                     }else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
                      }
                return true;
-		
+		break;
 		switch (strtolower($args[0])){
 			case "name":
 			case "setname":
