@@ -25,7 +25,7 @@ class PetCommand extends PluginCommand {
 				return true;
                     }else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
                      }
-                }
+                
                return true;
 		break;
 		switch (strtolower($args[0])){
@@ -140,4 +140,4 @@ class PetCommand extends PluginCommand {
 							$sender->sendMessage("/pet type [type]");
 							$sender->sendMessage("Types: blaze, pig, chicken, dog, rabbit, magma, bat, silverfish");
 						return true;
-          
+          }
