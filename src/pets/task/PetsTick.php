@@ -3,7 +3,6 @@
 namespace pets\task;
 
 use Pets\Pets;
-use LbCore\player\LbPlayer;
 use pocketmine\scheduler\PluginTask;
 
 /**
