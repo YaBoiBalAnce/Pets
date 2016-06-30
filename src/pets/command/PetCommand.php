@@ -36,7 +36,7 @@ class PetCommand extends PluginCommand {
 				return true;
 			break;
 			case "help":
-				if($sender->hasPermission('pet.command.help')){
+				if($sender->hasPermission('pets.command.help')){
 				$sender->sendMessage("§e======PetHelp======");
 				$sender->sendMessage("§b/pets to Spawn your Pet");
 				$sender->sendMessage("§b/pets type [type]");
