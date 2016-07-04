@@ -30,8 +30,7 @@ class PetCommand extends PluginCommand {
                     return true;
                 }
 
-		 switch (strtolower($args[0])){
-			case "help":
+		 if($args[0] == "help"){
 				if($sender->hasPermission('pets.command.help')){
 				$sender->sendMessage("§e======PetHelp======");
 				$sender->sendMessage("§b/pets to Spawn your Pet");
@@ -40,12 +39,10 @@ class PetCommand extends PluginCommand {
 				}else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
 					    }
 				return true;
-			break;
-			case "type":
+			
+			if($args[0] == "type"){
 				if (isset($args[1])){
-					switch ($args[1]){
-						case "wolf":
-						case "dog":
+					if($args[1] == "wolf"){
 							if ($sender->hasPermission("pets.type.dog")){
 								$this->main->changePet($sender, "WolfPet");
 								$sender->sendMessage("Your pet has changed to Wolf!");
@@ -54,8 +51,8 @@ class PetCommand extends PluginCommand {
 								$sender->sendMessage("You do not have permission for dog pet!");
 								return true;
 							}
-						break;
-						case "chicken":
+						
+						if($args[1] == "chicken"){
 							if ($sender->hasPermission("pets.type.chicken")){
 								$this->main->changePet($sender, "ChickenPet");
 								$sender->sendMessage("Your pet has changed to Chicken!");
@@ -64,8 +61,8 @@ class PetCommand extends PluginCommand {
 								$sender->sendMessage("You do not have permission for chicken pet!");
 								return true;
 							}
-						break;
-						case "pig":
+						
+						if($args[1] == "pig"){
 							if ($sender->hasPermission("pets.type.pig")){
 								$this->main->changePet($sender, "PigPet");
 								$sender->sendMessage("Your pet has changed to Pig!");
@@ -74,8 +71,8 @@ class PetCommand extends PluginCommand {
 								$sender->sendMessage("You do not have permission for pig pet!");
 								return true;
 							}
-						break;
-						case "blaze":
+						
+						if($args[1] == "blaze"){
 							if ($sender->hasPermission("pets.type.blaze")){
 								$this->main->changePet($sender, "BlazePet");
 								$sender->sendMessage("Your pet has changed to Blaze!");
@@ -84,8 +81,8 @@ class PetCommand extends PluginCommand {
 								$sender->sendMessage("You do not have permission for blaze pet!");
 								return true;
 							}
-						break;
-						case "magma":
+						
+						if($args[1] == "magma"){
 							if ($sender->hasPermission("pets.type.magma")){
 								$this->main->changePet($sender, "MagmaPet");
 								$sender->sendMessage("Your pet has changed to Magma!");
@@ -94,8 +91,8 @@ class PetCommand extends PluginCommand {
 								$sender->sendMessage("You do not have permission for blaze pet!");
 								return true;
 							}
-						break;
-						case "rabbit":
+						
+						if($args[1] == "rabbit"){
 							if ($sender->hasPermission("pets.type.rabbit")){
 								$this->main->changePet($sender, "RabbitPet");
 								$sender->sendMessage("Your pet has changed to Rabbit!");
@@ -104,8 +101,8 @@ class PetCommand extends PluginCommand {
 								$sender->sendMessage("You do not have permission for rabbit pet!");
 								return true;
 							}
-						break;
-						case "bat":
+						
+						if($args[1] == "bat"){
 							if ($sender->hasPermission("pets.type.bat")){
 								$this->main->changePet($sender, "BatPet");
 								$sender->sendMessage("Your pet has changed to Bat!");
@@ -114,8 +111,8 @@ class PetCommand extends PluginCommand {
 								$sender->sendMessage("You do not have permission for bat pet!");
 								return true;
 							}
-						break;
-						case "silverfish":
+						
+						if($args[1] == "silverfish"){
 							if ($sender->hasPermission("pets.type.silverfish")){
 								$this->main->changePet($sender, "SilverFishPet");
 								$sender->sendMessage("Your pet has changed to SiverFish!");
@@ -124,11 +121,11 @@ class PetCommand extends PluginCommand {
 								$sender->sendMessage("You do not have permission for SilverFish pet!");
 								return true;
 							}
-						break;
+						
 							}
 							}
-							break;
-						default:
+							
+						if($args[1] == null){
 							$sender->sendMessage("/pet type [type]");
 							$sender->sendMessage("Types: blaze, pig, chicken, dog, rabbit, magma, bat, silverfish");	
 return true;
@@ -138,4 +135,12 @@ return true;
 		}
 		
 	}
-
+                                                }
+                                                }
+                                        }
+                                }
+                        }
+                 }
+                         }
+        }
+}
