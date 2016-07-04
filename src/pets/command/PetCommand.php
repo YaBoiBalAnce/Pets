@@ -35,7 +35,8 @@ class PetCommand extends PluginCommand {
 				$sender->sendMessage("§e======PetHelp======");
 				$sender->sendMessage("§b/pets to Spawn your Pet");
 				$sender->sendMessage("§b/pets type [type]");
-				return true;
+				$sender->sendMessage("§bTypes: blaze, pig, chicken, dog, rabbit, magma, bat, silverfish");
+                                return true;
 				}else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
 					    }
 				return true;
@@ -128,9 +129,7 @@ class PetCommand extends PluginCommand {
 						
 				
 			
-        }else{
-		$sender->sendMessage("/pet type [type]");
-		$sender->sendMessage("Types: blaze, pig, chicken, dog, rabbit, magma, bat, silverfish");
+        
 	}
                                                 
                                                 
