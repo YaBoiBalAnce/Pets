@@ -126,7 +126,7 @@ class PetCommand extends PluginCommand {
 							
                                 
 						
-				}
+				
 			
         }else{
 		$sender->sendMessage("/pet type [type]");
@@ -134,7 +134,7 @@ class PetCommand extends PluginCommand {
 	}
                                                 
                                                 
-                                        
+                        }                            
         }
 }
                         
