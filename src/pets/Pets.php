@@ -1,7 +1,5 @@
 <?php
-
 namespace Pets;
-
 use pocketmine\entity\Creature;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Timings;
@@ -14,21 +12,16 @@ use pocketmine\block\Air;
 use pocketmine\block\Liquid;
 use pocketmine\utils\TextFormat;
 use pets\main;
-
 abstract class Pets extends Creature {
-
 	protected $owner = null;
 	protected $distanceToOwner = 0;
 	public $closeTarget = null;
-
 	public function saveNBT() {
 		
 	}
-
 	public function setOwner(Player $player) {
 		$this->owner = $player;
 	}
-
 	public function spawnTo(Player $player) {
 		if(!$this->closed ) {
 			if (!isset($this->hasSpawned[$player->getId()]) && isset($player->usedChunks[Level::chunkHash($this->chunk->getX(), $this->chunk->getZ())])) {
@@ -56,7 +49,6 @@ abstract class Pets extends Creature {
 			}
 		}
 	}
-
 	public function updateMovement() {
 		if (
 				$this->lastX !== $this->x || $this->lastY !== $this->y || $this->lastZ !== $this->z || $this->lastYaw !== $this->yaw || $this->lastPitch !== $this->pitch
@@ -69,11 +61,9 @@ abstract class Pets extends Creature {
 		}
 		$this->level->addEntityMovement($this->chunk->getX(), $this->chunk->getZ(), $this->id, $this->x, $this->y, $this->z, $this->yaw, $this->pitch);
 	}
-
 	public function attack($damage, EntityDamageEvent $source) {
 		
 	}
-
 	public function move($dx, $dy, $dz) {
 		$this->boundingBox->offset($dx, 0, 0);
 		$this->boundingBox->offset(0, 0, $dz);
@@ -81,11 +71,9 @@ abstract class Pets extends Creature {
 		$this->setComponents($this->x + $dx, $this->y + $dy, $this->z + $dz);		
 		return true;
 	}
-
 	public function getSpeed() {
 		return 1;
 	}
-
 	public function updateMove() {
 		if(is_null($this->closeTarget)) {
 			$x = $this->owner->x - $this->x;
@@ -151,12 +139,20 @@ abstract class Pets extends Creature {
 		$this->move($dx, $dy, $dz);
 		$this->updateMovement();
 	}
-
 	public function onUpdate($currentTick) {
-		if(!($this->owner instanceof Player) || $this->owner->closed) {
+		if(!($this->owner instanceof Player) && $this->owner->closed) {
 			$this->fastClose();
 			return false;
 		}
+
+		if($this->getHealth() == 0){
+			return false;
+		}
+		
+		if(!$this->isAlive()){
+			return false;
+		}
+		
 		if($this->closed){
 			return false;
 		}
@@ -168,10 +164,8 @@ abstract class Pets extends Creature {
 		$this->entityBaseTick($tickDiff);
 		$this->updateMove();
 		$this->checkChunks();
-
 		return true;
 	}
-
 	public function returnToOwner() {
 		$len = rand(2, 6);
 		$x = (-sin(deg2rad( $this->owner->yaw))) * $len  +  $this->owner->getX();
@@ -184,8 +178,6 @@ abstract class Pets extends Creature {
 	public function fastClose() {
 		parent::close();
 	}
-
-
 	public function close(){
 		if(!($this->owner instanceof Player) || $this->owner->closed) {
 			$this->fastClose();
@@ -197,13 +189,16 @@ abstract class Pets extends Creature {
 // 			$z = cos(deg2rad( $this->owner->yaw + 20)) * $len  +  $this->owner->getZ();
 // 			$this->closeTarget = new Vector3($x, $this->owner->getY() + 1, $z);
 			$this->kill();
+			$this->despawnFromAll();
+			$this->setHealth(0);
 		} else {
 			if (isset(main::$pet[$this->owner->getName()])) {
 				$this->kill();
+				$this->despawnFromAll();
+				$this->setHealth(0);
 			}
 		}
 	}
-
 	
 	/**
 	 * Return interval from started to current time in minutes
