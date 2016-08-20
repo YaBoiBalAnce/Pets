@@ -11,9 +11,9 @@ const NETWORK_ID = 11;
 
   public function getName(){
     return "CowPet";
-    
+  }
     public function getSpeed(){
       return 1.5;
     }
-  }
+  
 }
