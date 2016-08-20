@@ -119,7 +119,7 @@ class PetCommand extends PluginCommand {
 								$sender->sendMessage("Your pet has changed to SiverFish!");
 								return true;
 							}else{
-								$sender->sendMessage("You do not have permission for SilverFish pet!");
+								$sender->sendMessage("You do not have permission for Silverfish pet!");
 								return true;
 							}
 						
