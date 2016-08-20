@@ -18,7 +18,7 @@ class BatPet extends Pets {
 		return "BatPet";
 	}
 
-	public function getSpeed() {
+	public function getFlySpeed() {
 		return 0.8;
 	}
 
