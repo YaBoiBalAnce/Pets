@@ -140,7 +140,7 @@ abstract class Pets extends Creature {
 		$this->updateMovement();
 	}
 	public function onUpdate($currentTick) {
-		if(!($this->owner instanceof Player) && $this->owner->closed) {
+		if(!($this->owner instanceof Player) || $this->owner->closed) {
 			$this->fastClose();
 			return false;
 		}
