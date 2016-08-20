@@ -14,7 +14,7 @@
  	}
  	
  	public function getSpeed() {
- 		return 0.5;
+ 		return 2.0;
  	}
  
  }
