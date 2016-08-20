@@ -44,7 +44,7 @@ class PetCommand extends PluginCommand {
 			if($args[0] == "type"){
 				if (isset($args[1])){
 					if($args[1] == "wolf"){
-							if ($sender->hasPermission("pets.type.dog")){
+							if ($sender->hasPermission("pets.type.wolf")){
 								$this->main->changePet($sender, "WolfPet");
 								$sender->sendMessage("Your pet has changed to Wolf!");
 								return true;
