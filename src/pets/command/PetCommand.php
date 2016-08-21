@@ -35,7 +35,7 @@ class PetCommand extends PluginCommand {
 				$sender->sendMessage("§e======PetHelp======");
 				$sender->sendMessage("§b/pets to Spawn your Pet");
 				$sender->sendMessage("§b/pets type [type]");
-				$sender->sendMessage("§bTypes: blaze, pig, chicken, wolf, rabbit, magma, bat, silverfish, spider, cow, creeper, irongolem");
+				$sender->sendMessage("§bTypes: blaze, pig, chicken, wolf, rabbit, magma, bat, silverfish, spider, cow, creeper, irongolem, husk");
                                 return true;
 				}else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
 					    }
@@ -154,7 +154,7 @@ class PetCommand extends PluginCommand {
 								return true;
 							}
                                                 }
-					if($args[1] == "irongolem"){
+					                 if($args[1] == "irongolem"){
 							if ($sender->hasPermission("pets.type.irongolem")){
 								$this->main->changePet($sender, "IronGolemPet");
 								$sender->sendMessage("Your pet has changed to Iron Golem!");
@@ -164,7 +164,16 @@ class PetCommand extends PluginCommand {
 								return true;
 							}
                                                 }
-			
+			                    if($args[1] == "husk"){
+							if ($sender->hasPermission("pets.type.husk")){
+								$this->main->changePet($sender, "HuskPet");
+								$sender->sendMessage("Your pet has changed to Husk!");
+								return true;
+							}else{
+								$sender->sendMessage("You do not have permission for Husk pet!");
+								return true;
+							}
+                                                }
         
 	}
                                                 
@@ -176,4 +185,3 @@ class PetCommand extends PluginCommand {
 
                          
         
-
