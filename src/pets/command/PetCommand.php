@@ -35,7 +35,7 @@ class PetCommand extends PluginCommand {
 				$sender->sendMessage("§e======PetHelp======");
 				$sender->sendMessage("§b/pets to Spawn your Pet");
 				$sender->sendMessage("§b/pets type [type]");
-				$sender->sendMessage("§bTypes: blaze, pig, chicken, wolf, rabbit, magma, bat, silverfish, spider, cow");
+				$sender->sendMessage("§bTypes: blaze, pig, chicken, wolf, rabbit, magma, bat, silverfish, spider, cow, creeper");
                                 return true;
 				}else{$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
 					    }
