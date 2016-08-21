@@ -174,7 +174,16 @@ class PetCommand extends PluginCommand {
 								return true;
 							}
                                                 }
-        
+                                           if($args[1] == "enderman"){
+							if ($sender->hasPermission("pets.type.enderman")){
+								$this->main->changePet($sender, "EndermanPet");
+								$sender->sendMessage("Your pet has changed to Enderman!");
+								return true;
+							}else{
+								$sender->sendMessage("You do not have permission for Enderman pet!");
+								return true;
+							}
+                                                }
 	}
                                                 
                                                 
