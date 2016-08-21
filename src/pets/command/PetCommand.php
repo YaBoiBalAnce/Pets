@@ -41,6 +41,11 @@ class PetCommand extends PluginCommand {
 					    }
 				return true;
                  }
+                 if($args[0] == "name"){
+                   if(isset($args[1])){	
+                 	$petname = $args[1];
+                   }
+                 }
 			if($args[0] == "type"){
 				if (isset($args[1])){
 					if($args[1] == "wolf"){
