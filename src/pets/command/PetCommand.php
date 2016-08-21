@@ -42,10 +42,14 @@ class PetCommand extends PluginCommand {
 				return true;
                  }
                if($args[0] == "name"){
+               	 if($sender->hasPermission("pets.command.name")){
                	 if (isset($args[1])){
                	  $petname = $args[1];
                	  $pet = $this->main->getPet($sender->getName());
                	  $pet->setNameTagVisible($petname);
+               	 }
+               	 }else{
+               	 	$sender->sendMessage("§cYou do not have permission to use this command");
                	 }
                }
                	
