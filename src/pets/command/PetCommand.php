@@ -46,7 +46,7 @@ class PetCommand extends PluginCommand {
                	 if (isset($args[1])){
                	  $petname = $args[1];
                	  $pet = $this->main->getPet($sender->getName());
-               	  $pet->setNameTagVisible($petname);
+               	  $pet->setNameTag($petname);
                	 }
                	 }else{
                	 	$sender->sendMessage("§cYou do not have permission to use this command");
