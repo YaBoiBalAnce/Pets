@@ -71,6 +71,7 @@ class main extends PluginBase implements Listener {
 		$pet = Entity::createEntity($type, $chunk, $nbt, ...$args);
 		$pet->setOwner($player);
 		$pet->spawnToAll();
+                $pet->setNameTag(TF::BLUE."".$player->getName()."'s Pet");
 		return $pet; 
 	}
 
