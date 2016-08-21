@@ -47,9 +47,10 @@ class PetCommand extends PluginCommand {
                	  $petname = $args[1];
                	  $pet = $this->main->getPet($sender->getName());
                	  $pet->setNameTag($petname);
+               	  $sender->sendMessage(TF::BLUE."Your pets name has been changed to ".$petname."");
                	 }
                	 }else{
-               	 	$sender->sendMessage("§cYou do not have permission to use this command");
+               	 	$sender->sendMessage(TextFormat::RED."You do not have permission to use this command");
                	 }
                }
                	
