@@ -31,7 +31,7 @@ abstract class Pets extends Creature {
 				$pk->x = $this->x;
 				$pk->y = $this->y;
 				$pk->z = $this->z;
-				$pk->nametag = TextFormat::BLUE .$player->getName()."'s Pet";
+				
 				$pk->speedX = 0;
 				$pk->speedY = 0;
 				$pk->speedZ = 0;
