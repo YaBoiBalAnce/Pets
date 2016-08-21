@@ -154,7 +154,16 @@ class PetCommand extends PluginCommand {
 								return true;
 							}
                                                 }
-				
+					if($args[1] == "irongolem"){
+							if ($sender->hasPermission("pets.type.irongolem")){
+								$this->main->changePet($sender, "IronGolemPet");
+								$sender->sendMessage("Your pet has changed to Iron Golem!");
+								return true;
+							}else{
+								$sender->sendMessage("You do not have permission for Iron Golem pet!");
+								return true;
+							}
+                                                }
 			
         
 	}
