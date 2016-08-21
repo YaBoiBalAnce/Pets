@@ -167,7 +167,8 @@ class main extends PluginBase implements Listener {
 		if (isset(self::$pet[$player->getName()])){
 			self::$pet[$player->getName()]->close();
 			unset(self::$pet[$player->getName()]);
-			$player->sendMessage("Pet Disapeared");
+			$this->disablePet($player);
+                        $player->sendMessage("Pet Disapeared");
 				
 			return;
 		}
