@@ -44,6 +44,8 @@ class PetCommand extends PluginCommand {
                  if($args[0] == "name"){
                    if(isset($args[1])){	
                  	$petname = $args[1];
+                 	$pet = $sender->getPet();
+                 	$pet->setNameTag($petname);
                    }
                  }
 			if($args[0] == "type"){
