@@ -18,6 +18,7 @@ use pocketmine\Player;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\math\Vector3;
+use pocketmine\utils\TextFormat as TF;
 
 class main extends PluginBase implements Listener {
 	
@@ -38,7 +39,15 @@ class main extends PluginBase implements Listener {
 		Entity::registerEntity(RabbitPet::class);
 		Entity::registerEntity(BatPet::class);
 		Entity::registerEntity(SilverfishPet::class);
-		//Entity::registerEntity(BlockPet::class);
+		Entity::registerEntity(SpiderPet::class);
+		Entity::registerEntity(CowPet::class);
+		Entity::registerEntity(CreeperPet::class);
+	        Entity::registerEntity(IronGolemPet::class);
+                Entity::registerEntity(HuskPet::class);
+                Entity::registerEntity(EndermanPet::class);
+                Entity::registerEntity(SheepPet::class);
+                Entity::registerEntity(WitchPet::class);
+		Entity::registerEntity(BlockPet::class);
 		//$server->getScheduler()->scheduleRepeatingTask(new task\PetsTick($this), 20*60);//run each minute for random pet messages
 		//$server->getScheduler()->scheduleRepeatingTask(new task\SpawnPetsTick($this), 20);
 		
@@ -65,6 +74,7 @@ class main extends PluginBase implements Listener {
 		$pet = Entity::createEntity($type, $chunk, $nbt, ...$args);
 		$pet->setOwner($player);
 		$pet->spawnToAll();
+                $pet->setNameTag(TF::BLUE."".$player->getName()."'s Pet");
 		return $pet; 
 	}
 
@@ -100,10 +110,36 @@ class main extends PluginBase implements Listener {
 				break;
  				case "SilverfishPet":
  				
- 				
+ 				break;
+ 				case "SpiderPet":
+ 					
+ 				break;
+ 				case "CowPet":
+ 					
+ 				break;
+ 				case "CreeperPet":
+ 					
+ 				break;
+ 				case "IronGolemPet":
+ 					
+ 				break;
+                                case "HuskPet":
+ 					
+ 				break;
+                                case "EndermanPet":
+ 					
+ 				break;
+ 				case "SheepPet":
+ 					
+ 				break;
+ 				case "WitchPet":
+ 					
+ 				break;
+ 				case "BlockPet":
+ 					
  				break;
  				default:
- 					$pets = array("ChickenPet", "PigPet", "WolfPet", "BlazePet", "RabbitPet", "BatPet","SilverfishPet");
+ 					$pets = array("ChickenPet", "PigPet", "WolfPet", "BlazePet", "RabbitPet", "BatPet","SilverfishPet","SpiderPet","CowPet","CreeperPet","IronGolemPet","HuskPet","EndermanPet","SheepPet","WitchPet","BlockPet");
  					$type = $pets[rand(0, 3)];
  			}
 			$pet = $this->create($player,$type, $source);
@@ -142,7 +178,8 @@ class main extends PluginBase implements Listener {
 		if (isset(self::$pet[$player->getName()])){
 			self::$pet[$player->getName()]->close();
 			unset(self::$pet[$player->getName()]);
-			$player->sendMessage("Pet Disapeared");
+			$this->disablePet($player);
+                        $player->sendMessage("Pet Disapeared");
 				
 			return;
 		}

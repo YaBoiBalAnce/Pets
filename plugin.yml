@@ -1,6 +1,6 @@
 name: Pets
 author: BalAnce
-description: Simple Pets Plugin By BalAnce + Lifeboat
+description: Pets Plugin
 version: 1.0.0 
 main: pets\main
 api: [1.12.0] 
